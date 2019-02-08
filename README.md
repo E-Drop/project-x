@@ -163,4 +163,4 @@ The url to your repository and to your deployed project
 
 The url to your presentation slides
 
-[Slides Link](http://slides.com)
+[Slides Link](https://slides.com/matiasferreiro/deck-1#/)

@@ -13,35 +13,31 @@ module.exports = (app) => {
     res.render('auth/signup');
   });
 
-  app.post('/signup', (req, res, next) => {
+  app.post('/signup', async(req, res, next) => {
     const { username, password } = req.body;
 
     if (username === '' || password === '') {
-      req.flash('error', 'empty fields by flash');
+      req.flash('error', 'empty fields');
       res.redirect('/signup');
     } else {
-      User.findOne({ username })
-        .then((user) => {
-          if (!user) {
-            const salt = bcrypt.genSaltSync(bcryptSalt);
-            const hashPass = bcrypt.hashSync(password, salt);
-            User.create({ username, password: hashPass })
-              .then(() => {
-                res.redirect('/products');
-              })
-              .catch((error) => {
-                next(error);
-              });
-          } else {
-            req.flash('error', 'incorrect');
-            res.redirect('/signup');
-          }
-        })
-        .catch((error) => {
-          next(error);
-        });
+      try {
+    const user = await StoreOwner.findOne({ username });
+    const store = await Store.findOne({ CIF });
+    if (!user && !store) {
+      const salt = bcrypt.genSaltSync(bcryptSalt);
+      const hashPass = bcrypt.hashSync(password, salt);
+      const newStore = await Store.create({});
+      await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
+      res.redirect('/dashboard');
+    } else {
+      req.flash('error', 'That user or store already exists');
+      res.redirect('/signup');
     }
-  });
+  }catch(error) {
+    next(error);
+  }
+  }
+});
 
   app.get('/login', (req, res, next) => {
     res.render('auth/login', { errorMessage: undefined });

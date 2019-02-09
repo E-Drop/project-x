@@ -1,4 +1,4 @@
 
 module.exports = {
-    db : 'mongodb://localhost:27017/iron-amazon',
+    db : 'mongodb://localhost:27017/project-x',
 }

@@ -2,7 +2,8 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const app = express();
-const login = require('./routes/index');
+const login = require('./routes/inout');
+const dashboard = require('./routes/dashboard');
 
 // cookie-parser save cookies in the browser
 const cookieParser = require('cookie-parser');
@@ -67,6 +68,7 @@ app.use((req, res, next) => {
 });
 
 login(app);
+dashboard(app);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

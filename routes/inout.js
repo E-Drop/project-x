@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
+const Store = require('../models/Store');
+const StoreOwner = require('../models/StoreOwner');
+
 
 const bcryptSalt = 10;
 
@@ -14,28 +16,28 @@ module.exports = (app) => {
   });
 
   app.post('/signup', async(req, res, next) => {
-    const { username, password } = req.body;
+    const { username, password, name, location, CIF } = req.body;
 
     if (username === '' || password === '') {
       req.flash('error', 'empty fields');
       res.redirect('/signup');
     } else {
-      try {
-    const user = await StoreOwner.findOne({ username });
-    const store = await Store.findOne({ CIF });
-    if (!user && !store) {
-      const salt = bcrypt.genSaltSync(bcryptSalt);
-      const hashPass = bcrypt.hashSync(password, salt);
-      const newStore = await Store.create({});
-      await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
-      res.redirect('/dashboard');
-    } else {
-      req.flash('error', 'That user or store already exists');
-      res.redirect('/signup');
+    try {
+      const user = await StoreOwner.findOne({ username });
+      const store = await Store.findOne({ CIF });
+      if (!user && !store) {
+        const salt = bcrypt.genSaltSync(bcryptSalt);
+        const hashPass = bcrypt.hashSync(password, salt);
+        const newStore = await Store.create({name, CIF, location});
+        await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
+        res.redirect('/dashboard');
+      } else {
+        req.flash('error', 'That user or store already exists');
+        res.redirect('/signup');
+      }
+    }catch(error) {
+      next(error);
     }
-  }catch(error) {
-    next(error);
-  }
   }
 });
 
@@ -53,7 +55,7 @@ module.exports = (app) => {
       });
       return;
     }
-    User.findOne({ username })
+    StoreOwner.findOne({ username })
       .then((user) => {
         if (!user) {
           res.render('auth/login', {
@@ -64,7 +66,7 @@ module.exports = (app) => {
         if (bcrypt.compareSync(password, user.password)) {
           // Save the login in the session!
           req.session.currentUser = user;
-          res.redirect('/');
+          res.redirect('/dashboard');
         } else {
           res.render('auth/login', {
             errorMessage: 'Incorrect password or username',

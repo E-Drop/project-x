@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const Store = require('../models/Store');
-const StoreOwner = require('../models/StoreOwner');
+const StoreOwner = require('../models/storeOwner');
 
 
 const bcryptSalt = 10;

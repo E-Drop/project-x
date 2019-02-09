@@ -2,7 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const app = express();
-const login = require('./routes/inout');
+const login = require('./routes/auth');
 const dashboard = require('./routes/dashboard');
 
 // cookie-parser save cookies in the browser

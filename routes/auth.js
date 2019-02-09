@@ -36,7 +36,7 @@ module.exports = (app) => {
         if (bcrypt.compareSync(password, user.password)) {
           // Save the login in the session!
           req.session.currentUser = user;
-          req.session.rol = 'admin';
+          req.session.admin = true;
           res.redirect('/dashboard');
         } else {
           res.render('auth/admin', {

@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const Store = require('../models/Store');
 const StoreOwner = require('../models/storeOwner');
+const Admin = require('../models/Admin');
 
 
 const bcryptSalt = 10;
@@ -9,6 +10,43 @@ module.exports = (app) => {
   /* GET home page. */
   app.get('/', (req, res, next) => {
     res.render('index', { title: 'Express' });
+  });
+
+  app.get('/admin', (req, res, next) => {
+    res.render('auth/admin');
+  });
+
+  app.post('/admin', (req, res, next) => {
+    const { username, password } = req.body;
+
+    if (username === '' || password === '') {
+      res.render('auth/admin', {
+        errorMessage: 'Indicate a username and a password to ',
+      });
+      return;
+    }
+    Admin.findOne({ username })
+      .then((user) => {
+        if (!user) {
+          res.render('auth/admin', {
+            errorMessage: "The username doesn't exist",
+          });
+          return;
+        }
+        if (bcrypt.compareSync(password, user.password)) {
+          // Save the login in the session!
+          req.session.currentUser = user;
+          req.session.rol = 'admin';
+          res.redirect('/dashboard');
+        } else {
+          res.render('auth/admin', {
+            errorMessage: 'Incorrect password or username',
+          });
+        }
+      })
+      .catch((error) => {
+        next(error);
+      });
   });
 
   app.get('/signup', (req, res, next) => {
@@ -22,31 +60,30 @@ module.exports = (app) => {
       req.flash('error', 'empty fields');
       res.redirect('/signup');
     } else {
-    try {
-      const user = await StoreOwner.findOne({ username });
-      const store = await Store.findOne({ CIF });
-      if (!user && !store) {
-        const salt = bcrypt.genSaltSync(bcryptSalt);
-        const hashPass = bcrypt.hashSync(password, salt);
-        const newStore = await Store.create({name, CIF, location});
-        await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
-        res.redirect('/dashboard');
-      } else {
-        req.flash('error', 'That user or store already exists');
-        res.redirect('/signup');
+      try {
+        const user = await StoreOwner.findOne({ username });
+        const store = await Store.findOne({ CIF });
+        if (!user && !store) {
+          const salt = bcrypt.genSaltSync(bcryptSalt);
+          const hashPass = bcrypt.hashSync(password, salt);
+          const newStore = await Store.create({name, CIF, location});
+          await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
+          res.redirect('/dashboard');
+        } else {
+          req.flash('error', 'That user or store already exists');
+          res.redirect('/signup');
+        }
+      }catch(error) {
+        next(error);
       }
-    }catch(error) {
-      next(error);
     }
-  }
-});
+  });
 
   app.get('/login', (req, res, next) => {
     res.render('auth/login', { errorMessage: undefined });
   });
 
   app.post('/login', (req, res, next) => {
-    console.log(req.body);
     const { username, password } = req.body;
 
     if (username === '' || password === '') {

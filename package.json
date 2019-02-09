@@ -1,5 +1,5 @@
 {
-  "name": "express-boilerplate",
+  "name": "Project-X",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -19,7 +19,6 @@
     "express-session": "^1.15.6",
     "http-errors": "~1.6.2",
     "mongoose": "^5.4.9",
-    "mongoose-transactions": "^1.1.1",
     "morgan": "~1.9.0"
   },
   "devDependencies": {

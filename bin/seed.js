@@ -1,19 +1,13 @@
 const mongoose = require('mongoose');
-const Product = require('../models/product');
+const bcrypt = require('bcrypt');
+const bcryptSalt = 10;
+const Admin = require('../models/Admin');
 
-const products = [
-  { name: 'Macbook Pro', price: '5', imageURL: '' },
-  { name: 'Macbook Air', price: '2', imageURL: '' },
-];
-
-mongoose.connect('mongodb://localhost:27017/iron-amazon', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost:27017/project-x', { useNewUrlParser: true })
   .then(() => {
-    console.log('connected to db');
-    return Product.create(products);
-  }).then((data) => {
-    console.log('created data', data);
-  }).then(() => {
-    mongoose.connection.close();
+    const salt = bcrypt.genSaltSync(bcryptSalt);
+    const hashPass = bcrypt.hashSync('1t4l14nF00d', salt);
+    Admin.create({ username: 'Admin', password: hashPass});
   })
   .catch((error) => {
     console.log(error);

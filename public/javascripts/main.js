@@ -6,7 +6,7 @@ function handleButton(e) {
       let { data } = response;
       let a = '';
         data = data.map((product)=>
-        a += `<li>${product.name} ${product.price} <a href="/products/${product.id}">Details</a> <a href="/products/edit/${product.id}">Edit</a> <form action="/products/delete/${product.id}" method="post"><button type="submit">Delete</button></form>`);
+        a += `<div><a id="view-product" href="/products/${product.id}"><p>${product.name}</p> <p>${product.price}</p></a> <p><a href="/products/edit/${product.id}"><button><i class="fas fa-pen"></i></button></a> <button id="${product.id}" class="delete"><i class="fas fa-times"></i></button></p></div>`);
         document.getElementById('ul').innerHTML = a;
       })
       .catch((error) => {
@@ -26,7 +26,7 @@ for(let button of deletes){
     await axios.post(`/products/delete/${id}`)
     .then((response) => {
       if(response.status === 200){
-        button.parentNode.remove();
+        button.parentNode.parentNode.remove();
       }
     })
     .catch((error) => {

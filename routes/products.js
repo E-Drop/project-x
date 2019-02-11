@@ -34,7 +34,7 @@ module.exports = app => {
   });
 
   app.post('/products/delete/:id', async (req, res, next) => {
-    await Product.findByIdAndDelete(req.params.id);
+    await Product.findByIdAndUpdate(req.params.id, { deleted: true });
     res.redirect('/products');
   });
 
@@ -53,7 +53,7 @@ module.exports = app => {
       await Product.create(newProduct);
       res.redirect('/products');
     } catch (error) {
-      next(error)
+      next(error);
     }
   });
 

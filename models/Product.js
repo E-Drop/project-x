@@ -7,7 +7,6 @@ const productSchema = new Schema({
     description: {type: String },
     price: { type: Number, required: true, min: 0 },
     stock: { type: Number, required: true, min: 0 },
-    deleted: { type: Boolean, default: false },
 });
 
 

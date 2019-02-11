@@ -3,7 +3,7 @@ const Product = require('../models/Product');
 module.exports = app => {
   app.get('/products', async (req, res, next) => {
     try {
-      const products = await Product.find({ deleted: false });
+      const products = await Product.find({});
       res.render('products/products', { products });
     } catch (error) {
       next(error);
@@ -33,9 +33,9 @@ module.exports = app => {
     }
   });
 
-  app.post('/products/:id', async (req, res, next) => {
+  app.post('/products/delete/:id', async (req, res, next) => {
     try {
-      await Product.findByIdAndUpdate(req.params.id, { deleted: true });
+      await Product.findByIdAndDelete(req.params.id);
       res.sendStatus(200);
     } catch (error) {
       next(error);
@@ -61,7 +61,7 @@ module.exports = app => {
     }
   });
 
-  app.post('/products/edit/:id', async (req, res, next) => {
+  app.post('/products/:id', async (req, res, next) => {
     try {
       const updatedProduct = req.body;
       await Product.findByIdAndUpdate(req.params.id, updatedProduct);

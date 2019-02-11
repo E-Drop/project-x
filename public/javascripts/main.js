@@ -6,7 +6,7 @@ function handleButton(e) {
       let { data } = response;
       let a = '';
         data = data.map((product)=>
-        a += `<div><a id="view-product" href="/products/${product.id}"><p>${product.name}</p> <p>${product.price}</p></a> <p><a href="/products/edit/${product.id}"><button><i class="fas fa-pen"></i></button></a> <button id="${product.id}" class="delete"><i class="fas fa-times"></i></button></p></div>`);
+        a += `<div><a id="view-product" href="/products/${product.id}"><p>${product.name}</p> <p>${product.price}</p></a> <p><a href="/products/edit/${product.id}"><button><i class="fas fa-pen"></i></button></a><button id="${product.name}" class="addToBuyList"><i class="fas fa-cart-plus"></i></button> <button id="${product.id}" class="delete"><i class="fas fa-times"></i></button></p></div>`);
         document.getElementById('ul').innerHTML = a;
       })
       .catch((error) => {
@@ -33,4 +33,21 @@ for(let button of deletes){
       console.log(error);
     });
   })
-  }
+}
+
+const toBuy = document.getElementsByClassName('addToBuyList');
+var products = [];
+for(let button of toBuy){
+  button.addEventListener('click', async() => {
+    const id = button.id;
+    if(products.some(product => product.name === id)){
+      const index = products.findIndex(item => item.name === id);
+      products[index].quantity += 1; 
+    } else {
+      const obj = { name: id , quantity: 1};
+      console.log(obj);
+      products.push(obj);
+    }
+    console.log(products);
+  })
+}

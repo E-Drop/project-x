@@ -1,16 +1,17 @@
 function handleButton(e) {
-  e.preventDefault();
-  axios.get('https://pokeapi.co/api/v2/pokemon/ditto/')
-    .then((response) => {
-      const { data } = response;
-      console.log('my pokemons are', data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const search = document.getElementById('search');
+  if(search.value.length>3){
+    axios.get(`/api/products?name=${search.value}`)
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 }
-
 window.addEventListener('load', () => {
-  const btn = document.getElementById('btn');
-  btn.addEventListener('click', handleButton);
+  const search = document.getElementById('search');
+  search.addEventListener('keyup', handleButton);
 });

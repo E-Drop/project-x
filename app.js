@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const login = require('./routes/auth');
 const dashboard = require('./routes/dashboard');
-const products = require('./routes/products')
+const products = require('./routes/products');
 
 // cookie-parser save cookies in the browser
 const cookieParser = require('cookie-parser');
@@ -69,6 +69,7 @@ app.use((req, res, next) => {
 });
 
 login(app);
+app.use(requireLogin);
 dashboard(app);
 products(app);
 

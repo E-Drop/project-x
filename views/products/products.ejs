@@ -2,7 +2,7 @@
   <input type="text" id="search" placeholder="Search.." name="search">
   <button id="btn" type="submit"><i class="fa fa-search"></i></button>
 </form>
-<ul>
+<ul id="ul">
   <% products.forEach(product => { %>
     <li><%= product.name %> <%= product.price %> <a href="/products/<%= product.id %>">Details</a> <a href="/products/edit/<%= product.id %>">Edit</a> <form action="/products/delete/<%= product.id %>" method="post"><button type="submit">Delete</button></form>
   <%}) %>

@@ -25,7 +25,7 @@ module.exports = app => {
 
   app.get('/api/products', async (req, res, next) => {
     try {
-      const name = req.query.name;
+      const { name } = req.query;
       const result = await Product.find({ name: new RegExp(`${name}`, 'ig') });
       res.send(result);
     } catch (error) {

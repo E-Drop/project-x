@@ -3,7 +3,6 @@ const Store = require('../models/Store');
 const StoreOwner = require('../models/storeOwner');
 const Admin = require('../models/Admin');
 
-
 const bcryptSalt = 10;
 
 module.exports = (app) => {

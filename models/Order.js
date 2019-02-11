@@ -2,17 +2,26 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const orderSchema =new Schema({
-    status: { type: String, enum: ['pending', 'delivered'] },
-    products: [{
+const orderSchema = new Schema(
+  {
+    status: {
+      type: String,
+      enum: ['pending', 'delivered'],
+      default: 'pending'
+    },
+    products: [
+      {
         name: { type: String },
-        price: { type: NumberDecimal('0.01') },
-        quantity: { type: Number },
-    }],
-    _store: { type: Schema.Types.ObjectId, ref: 'Store' },
-}, {
-    timestamps: true,
-});
+        price: { type: Number },
+        quantity: { type: Number, min: 1 }
+      }
+    ],
+    _store: { type: Schema.Types.ObjectId, ref: 'Store', required: true }
+  },
+  {
+    timestamps: true
+  }
+);
 
 const Order = mongoose.model('Order', orderSchema);
 

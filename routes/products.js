@@ -1,49 +1,69 @@
 const Product = require('../models/Product');
 
 module.exports = app => {
-  app.get('/products', async (req, res) => {
-    const products = await Product.find({deleted: false});
-    res.render('products/products', { products });
+  app.get('/products', async (req, res, next) => {
+    try {
+      const products = await Product.find({ deleted: false });
+      res.render('products/products', { products });
+    } catch (error) {
+      next(error);
+    }
   });
 
-  app.get('/products/new', (req, res) => {
+  app.get('/products/new', (req, res, next) => {
     res.render('products/newProduct');
   });
 
-  
-  app.get('/products/:id', async (req, res) => {
-    const product = await Product.findById(req.params.id);
-    res.render('products/detail', { product });
+  app.get('/products/:id', async (req, res, next) => {
+    try {
+      const product = await Product.findById(req.params.id);
+      res.render('products/detail', { product });
+    } catch (error) {
+      next(error);
+    }
   });
 
-  app.get('/api/products', async(req,res, next) => {
-    const name = req.query.name;
-    const result = await Product.find({name: new RegExp(`${name}`, "ig")});
-    res.send(result)
-  }) 
-    
-  app.post('/products/delete/:id', async(req,res) => {
+  app.get('/api/products', async (req, res, next) => {
+    try {
+      const name = req.query.name;
+      const result = await Product.find({ name: new RegExp(`${name}`, 'ig') });
+      res.send(result);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.post('/products/delete/:id', async (req, res, next) => {
     await Product.findByIdAndDelete(req.params.id);
     res.redirect('/products');
-  })
-
-  app.get('/products/edit/:id', async (req, res) => {
-    const product = await Product.findById(req.params.id);
-    res.render('products/edit', { product });
   });
 
-  
-  app.post('/products', async (req, res) => {
-    const newProduct = req.body;
-    await Product.create(newProduct);
-    res.redirect('/products');
+  app.get('/products/edit/:id', async (req, res, next) => {
+    try {
+      const product = await Product.findById(req.params.id);
+      res.render('products/edit', { product });
+    } catch (error) {
+      next(error);
+    }
   });
 
-  app.post('/products/edit/:id', async(req,res) => {
-    const updatedProduct = req.body;
-    await Product.findByIdAndUpdate(req.params.id, updatedProduct);
-    res.redirect('/products');
+  app.post('/products', async (req, res, next) => {
+    try {
+      const newProduct = req.body;
+      await Product.create(newProduct);
+      res.redirect('/products');
+    } catch (error) {
+      next(error)
+    }
   });
 
- 
+  app.post('/products/edit/:id', async (req, res, next) => {
+    try {
+      const updatedProduct = req.body;
+      await Product.findByIdAndUpdate(req.params.id, updatedProduct);
+      res.redirect('/products');
+    } catch (error) {
+      next(error);
+    }
+  });
 };

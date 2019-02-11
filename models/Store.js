@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const storeSchema = new Schema({
-    name: { type: String},
-    CIF: { type: String, unique: true },
-    location: { type: String},
+    name: { type: String, required: true },
+    CIF: { type: String, unique: true, required: true },
+    location: { type: String, required: true },
 }, {
   timestamps: true,
 });

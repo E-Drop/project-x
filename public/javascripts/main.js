@@ -1,6 +1,6 @@
 function handleButton(e) {
   const search = document.getElementById('search');
-  if(search.value.length>1){
+  if(search.value.length>3){
     axios.get(`/api/products?name=${search.value}`)
     .then((response) => {
       let { data } = response;
@@ -18,3 +18,12 @@ window.addEventListener('load', () => {
   const search = document.getElementById('search');
   search.addEventListener('keyup', handleButton);
 });
+
+const deletes = document.getElementsByClassName('delete'); 
+for(let button of deletes){
+  button.addEventListener('click', () => {
+    let id = button.id;
+    axios.post(`/products/${id}`)
+    
+  })
+}

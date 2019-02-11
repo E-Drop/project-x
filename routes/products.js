@@ -33,9 +33,14 @@ module.exports = app => {
     }
   });
 
-  app.delete('/products/:id', async (req, res, next) => {
-    await Product.findByIdAndUpdate(req.params.id, { deleted: true });
-    res.redirect('/products');
+  app.post('/products/:id', async (req, res, next) => {
+    try {
+      await Product.findByIdAndUpdate(req.params.id, { deleted: true });
+      console.log('BORRADO')
+      res.redirect('/');
+    } catch (error) {
+      next(error);
+    }
   });
 
   app.get('/products/edit/:id', async (req, res, next) => {

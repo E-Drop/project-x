@@ -10,20 +10,33 @@ module.exports = app => {
     res.render('products/newProduct');
   });
 
-  app.post('/products', async (req, res) => {
-    const newProduct = req.body;
-    await Product.create(newProduct);
-    res.redirect('/products');
-  });
-
+  
   app.get('/products/:id', async (req, res) => {
     const product = await Product.findById(req.params.id);
     res.render('products/detail', { product });
   });
 
+  app.get('/api/products', async(req,res, next) => {
+    const name = req.query.name;
+    const result = await Product.find({name: new RegExp(`${name}`, "ig")});
+    res.send(result)
+  }) 
+    
+  app.post('/products/delete/:id', async(req,res) => {
+    await Product.findByIdAndDelete(req.params.id);
+    res.redirect('/products');
+  })
+
   app.get('/products/edit/:id', async (req, res) => {
     const product = await Product.findById(req.params.id);
     res.render('products/edit', { product });
+  });
+
+  
+  app.post('/products', async (req, res) => {
+    const newProduct = req.body;
+    await Product.create(newProduct);
+    res.redirect('/products');
   });
 
   app.post('/products/edit/:id', async(req,res) => {
@@ -32,8 +45,5 @@ module.exports = app => {
     res.redirect('/products');
   });
 
-  app.post('/products/delete/:id', async(req,res) => {
-    await Product.findByIdAndDelete(req.params.id);
-    res.redirect('/products');
-  })
+ 
 };

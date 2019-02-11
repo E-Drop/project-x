@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
-    name: { type: String },
+    name: { type: String, required: true },
     description: {type: String },
-    price: { type: Number },
-    stock: { type: Number },
-    deleted: { type: Boolean },
+    price: { type: Number, required: true, min: 0 },
+    stock: { type: Number, required: true, min: 0 },
+    deleted: { type: Boolean, default: false },
 });
 
 

@@ -54,7 +54,7 @@ app.use(session({
   },
 }));
 app.use((req, res, next) => {
-  console.log('session', req.session);
+  // console.log('session', req.session);
   next();
 });
 app.use(flash());

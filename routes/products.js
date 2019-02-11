@@ -36,8 +36,7 @@ module.exports = app => {
   app.post('/products/:id', async (req, res, next) => {
     try {
       await Product.findByIdAndUpdate(req.params.id, { deleted: true });
-      console.log('BORRADO')
-      res.redirect('/');
+      res.sendStatus(200);
     } catch (error) {
       next(error);
     }

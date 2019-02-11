@@ -21,9 +21,9 @@ window.addEventListener('load', () => {
 
 const deletes = document.getElementsByClassName('delete'); 
 for(let button of deletes){
-  button.addEventListener('click', () => {
+  button.addEventListener('click', async() => {
     let id = button.id;
-    axios.post(`/products/${id}`)
-    
+    await axios.post(`/products/${id}`);
+    window.location = '/';
   })
-}
+  }

@@ -33,7 +33,7 @@ module.exports = app => {
     }
   });
 
-  app.post('/products/delete/:id', async (req, res, next) => {
+  app.delete('/products/:id', async (req, res, next) => {
     await Product.findByIdAndUpdate(req.params.id, { deleted: true });
     res.redirect('/products');
   });

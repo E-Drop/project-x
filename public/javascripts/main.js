@@ -48,6 +48,12 @@ for(let button of toBuy){
       console.log(obj);
       products.push(obj);
     }
-    console.log(products);
+    return products;
   })
 }
+
+const buy = document.getElementById('buy'); 
+
+  buy.addEventListener('click', async() => {
+    await axios.post('/orders', { products })
+  })

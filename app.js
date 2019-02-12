@@ -22,8 +22,10 @@ const keys = require('./bin/config/keys');
 // usage: app.use('/products', requireLogin, 'path/to/protected/route');
 const requireLogin = require('./middlewares/protected');
 const notifications = require('./middlewares/notifications');
+require('dotenv').config();
 
-mongoose.connect(keys.db, { useNewUrlParser: true })
+
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
   .then(() => console.log('connected'))
   .catch(error => console.log('error', error));
 
@@ -46,7 +48,7 @@ app.use(session({
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60, // 1 day
   }),
-  secret: 'boilerplate',
+  secret: process.env.SECRET,
   resave: true,
   saveUninitialized: true,
   cookie: {

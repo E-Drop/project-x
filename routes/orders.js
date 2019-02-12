@@ -3,12 +3,13 @@ const Product = require('../models/Product');
 module.exports = app => {
   app.get('/orders', async (req, res, next) => {
     if (req.session.currentUser.admin) {
-      const orders = await Order.find({});
+      const orders = await Order.find({}).populate('_store');
       res.render('orders/orders', { orders });
     } else {
-      console.log(req.session.currentUser);
-      const orders = Order.find({ _store: req.session.currentUser._store });
+  
+      const orders = await Order.find({ _store: req.session.currentUser._store }).populate('_store');
 
+      console.log(orders)
       res.render('orders/orders', { orders });
     }
   });

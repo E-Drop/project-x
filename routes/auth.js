@@ -64,7 +64,9 @@ module.exports = (app) => {
           const salt = bcrypt.genSaltSync(bcryptSalt);
           const hashPass = bcrypt.hashSync(password, salt);
           const newStore = await Store.create({name, CIF, location});
-          await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
+          const user = await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
+          req.session.currentUser = user;
+          req.session.admin = false;
           res.redirect('/dashboard');
         } else {
           req.flash('error', 'That user or store already exists');
@@ -99,9 +101,8 @@ module.exports = (app) => {
           req.session.admin = false;
           res.redirect('/dashboard');
         } else {
-          res.render('auth/login', {
-            errorMessage: 'Incorrect password or username',
-          });
+          req.flash('error', 'Invalid credentials')
+          res.redirect('/');
         }
       })
       .catch((error) => {

@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+
 module.exports = app => {
   app.get('/orders', async (req, res, next) => {
     if (req.session.admin) {
@@ -42,4 +43,13 @@ module.exports = app => {
     }
   res.send("Order created successfully");
   });
+
+  app.get('/orders/new', async(req, res, next) => {
+    try {
+      const products = await Product.find({});
+      res.render('products/products', { products });
+    } catch (error) {
+      next(error);
+    }
+  })
 };

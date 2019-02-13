@@ -24,10 +24,6 @@ const requireLogin = require('./middlewares/protected');
 const notifications = require('./middlewares/notifications');
 require('dotenv').config();
 
-<<<<<<< HEAD
-
-=======
->>>>>>> dev
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
   .then(() => console.log('connected'))
   .catch(error => console.log('error', error));

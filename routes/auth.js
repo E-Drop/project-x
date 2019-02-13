@@ -27,10 +27,8 @@ module.exports = (app) => {
     Admin.findOne({ username })
       .then((user) => {
         if (!user) {
-          res.render('auth/admin', {
-            errorMessage: "The username doesn't exist",
-          });
-          return;
+          req.flash('error', 'Invalid credentials');
+          res.redirect('/admin');
         }
         if (bcrypt.compareSync(password, user.password)) {
           // Save the login in the session!

@@ -1,5 +1,7 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const loggedNotAdmin = require('../middlewares/loggedNotAdmin');
+const requireAdmin = require('../middlewares/requireAdmin')
 
 module.exports = app => {
   app.get('/orders', async (req, res, next) => {
@@ -15,8 +17,9 @@ module.exports = app => {
     }
   });
 
-  app.post('/orders', async (req, res, next) => {
+  app.post('/orders', loggedNotAdmin, async (req, res, next) => {
     const { products } = req.body;
+    console.log()
     let i = 0;
     for (let product of products) {
       try {
@@ -44,12 +47,22 @@ module.exports = app => {
   res.send("Order created successfully");
   });
 
-  app.get('/orders/new', async(req, res, next) => {
+  app.get('/orders/new', loggedNotAdmin, async(req, res, next) => {
     try {
       const products = await Product.find({});
       res.render('products/products', { products });
     } catch (error) {
       next(error);
+    }
+  })
+
+  app.get('/orders/stats', requireAdmin, async(req,res,next) => {
+    try{
+      const orders = await Order.aggregate().unwind('products').group({ _id: '$_store', 'total': { $sum: { $multiply: ["$products.price", "$products.quantity"] }}})
+      console.log(orders)
+      res.render('orders/orders', {orders})
+    } catch(error) {
+      next(error)
     }
   })
 };

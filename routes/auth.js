@@ -8,7 +8,7 @@ const bcryptSalt = 10;
 module.exports = (app) => {
   /* GET home page. */
   app.get('/', (req, res, next) => {
-    res.render('index', { title: 'Express' });
+    res.render('auth/login');
   });
 
   app.get('/admin', (req, res, next) => {
@@ -76,9 +76,6 @@ module.exports = (app) => {
     }
   });
 
-  app.get('/login', (req, res, next) => {
-    res.render('auth/login', { errorMessage: undefined });
-  });
 
   app.post('/login', (req, res, next) => {
     const { username, password } = req.body;
@@ -92,14 +89,14 @@ module.exports = (app) => {
     StoreOwner.findOne({ username })
       .then((user) => {
         if (!user) {
-          res.render('auth/login', {
-            errorMessage: "The username doesn't exist",
-          });
+          req.flash('error', 'The username doesn\'t exist')
+          res.redirect('/');
           return;
         }
         if (bcrypt.compareSync(password, user.password)) {
           // Save the login in the session!
           req.session.currentUser = user;
+          req.session.admin = false;
           res.redirect('/dashboard');
         } else {
           res.render('auth/login', {

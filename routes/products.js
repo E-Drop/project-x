@@ -1,16 +1,20 @@
 const Product = require('../models/Product');
+const requireAdmin = require('../middlewares/requireAdmin')
 
 module.exports = app => {
-  app.get('/products', async (req, res, next) => {
+  app.get('/products', requireAdmin, async (req, res, next) => {
+    console.log(req.session)
     try {
       const products = await Product.find({});
-      res.render('products/products', { products });
-    } catch (error) {
-      next(error);
+      res.render('products/products', { products })
+
+    } catch(error) {
+      next(error)
     }
+    
   });
 
-  app.get('/products/new', (req, res, next) => {
+  app.get('/products/new', requireAdmin, (req, res, next) => {
     res.render('products/newProduct');
   });
 
@@ -33,7 +37,7 @@ module.exports = app => {
     }
   });
 
-  app.post('/products/delete/:id', async (req, res, next) => {
+  app.post('/products/delete/:id', requireAdmin, async (req, res, next) => {
     try {
       await Product.findByIdAndDelete(req.params.id);
       res.sendStatus(200);
@@ -42,7 +46,7 @@ module.exports = app => {
     }
   });
 
-  app.get('/products/edit/:id', async (req, res, next) => {
+  app.get('/products/edit/:id', requireAdmin, async (req, res, next) => {
     try {
       const product = await Product.findById(req.params.id);
       res.render('products/edit', { product });
@@ -51,7 +55,7 @@ module.exports = app => {
     }
   });
 
-  app.post('/products', async (req, res, next) => {
+  app.post('/products', requireAdmin, async (req, res, next) => {
     try {
       const newProduct = req.body;
       await Product.create(newProduct);
@@ -61,7 +65,7 @@ module.exports = app => {
     }
   });
 
-  app.post('/products/:id', async (req, res, next) => {
+  app.post('/products/:id', requireAdmin, async (req, res, next) => {
     try {
       const updatedProduct = req.body;
       await Product.findByIdAndUpdate(req.params.id, updatedProduct);
@@ -71,3 +75,5 @@ module.exports = app => {
     }
   });
 };
+
+

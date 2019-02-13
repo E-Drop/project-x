@@ -4,13 +4,35 @@
 }
 
 body {
+  background-color: #302e2e;
   margin:0;
   padding:0;
   display: flex;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   align-items: center;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+p {
+  color:white;
+}
+header {
+  width:100%;
+  border-radius: 0 0 100px 100px;
+  background: #118cdc;
+}
+
+.products {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrapper {
+  max-width: 70vw;
+  
+  min-height: 100vh;
 }
 
 a {
@@ -28,15 +50,13 @@ a {
   color: rgb(187, 0, 0);
 }
 
-#ul > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+#ul > .box {
   width: 15vw;
   height: 200px;
   background-color: #1E1E1E;
   margin: 20px 9vw ;
   border-radius: 20px;
+  box-shadow: 1px 2px 4px #118cdc;
 }
 
 #ul {
@@ -46,7 +66,7 @@ a {
 }
 
 #ul div a {
-  color: #118cdc;
+  color: white;
   text-decoration:none;
 }
 
@@ -55,10 +75,15 @@ a {
   justify-content: space-around;
 }
 
+h1 {
+  color: white;
+}
+
 h2 {
   font-size: 2rem;
   text-align: center;
   justify-self: flex-start;
+  color: white;
 }
 
 #login {
@@ -69,4 +94,80 @@ h2 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.wrapper {
+  padding: 50px 0;
+}
+
+.wrapper  form {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.wrapper > form > button {
+  height: 31px;
+  margin: 0;
+  border-radius: 0px 5px 5px 0;
+}
+
+.wrapper > form > input {
+  width: 40vw;
+  height:25px;
+  border-radius: 5px 0 0 5px;
+}
+
+.addToBuyList {
+  position: absolute;
+
+
+}
+
+.fa-cart-plus {
+  color: green;
+}
+
+.fa-pen{
+  color: #118cdc;
+}
+
+.fa-times {
+  color: red;
+}
+
+.third-row{
+  display: flex;
+  height: 50px;
+}
+
+.third-row button {
+  height: 30px;
+  border-radius: 5px;
+}
+
+.store{
+  justify-content: space-around;
+}
+
+.admin{
+  justify-content: center;
+}
+
+.admin-menu {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly;
+}
+.admin-menu > div {
+  width: 32vw;
+  height:32vw;
+  color: #118cdc;
+  margin:2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  background: black;
 }

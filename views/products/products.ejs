@@ -1,9 +1,25 @@
-<form action='/search' method='POST'>
-  <input type="text" id="search" placeholder="Search.." name="search">
-  <button id="btn" type="submit"><i class="fa fa-search"></i></button>
-</form>
-<section id="ul">
-  <% products.forEach(product => { %>
-    <div><a id="view-product" href="/products/<%= product.id %>"><p><%= product.name %></p> <p><%= product.price %></p></a> <p><a href="/products/edit/<%= product.id %>"><button><i class="fas fa-pen"></i></button></a><button id="<%= product.name %>" class="addToBuyList"><i class="fas fa-cart-plus"></i></button><button id="<%= product.id %>" class="delete"><i class="fas fa-times"></i></button></p></div>
-  <%}) %>
-</ul>
+<div class="products">
+  <header>
+  <h2>PRODUCTS</h2>
+  </header>
+  <section class="wrapper">
+    <form action='/search' method='POST'>
+      <input type="text" id="search" placeholder="Search.." name="search"><button id="btn" type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    <section id="ul">
+      <% products.forEach(product => {%>
+        <div class="box ">
+          <a id="view-product" href="/products/<%= product.id %>"><p><%= product.name %></p></a> 
+          <div class="second-row"> <p><%= product.price %>€</p></div>
+          <% if(admin){%> 
+            <div class="store third-row"><a href="/products/edit/<%= product.id %>"><button><i class="fas fa-pen"></i></button></a><button id="<%= product.id %>" class="delete"><i class="fas fa-times"></i></button></div>
+          
+          <%} else {%>
+            <div class="admin third-row"><button id="<%= product.name %>" class="addToBuyList"><i class="fas fa-cart-plus"></i></button></div>
+          <% } %>
+        </div>
+      <% }) %>
+    </section>
+    <button id="buy">buy</button>
+  </section>
+</div>

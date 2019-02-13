@@ -11,6 +11,7 @@ const orderSchema = new Schema(
     },
     products: [
       {
+        _id: false,
         name: { type: String },
         price: { type: Number },
         quantity: { type: Number, min: 1 }

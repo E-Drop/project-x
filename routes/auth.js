@@ -19,10 +19,8 @@ module.exports = (app) => {
     const { username, password } = req.body;
 
     if (username === '' || password === '') {
-      res.render('auth/admin', {
-        errorMessage: 'Indicate a username and a password to ',
-      });
-      return;
+      req.flash('error', 'please don\'t leave any empty fields')
+      res.redirect('/admin')
     }
     Admin.findOne({ username })
       .then((user) => {
@@ -36,9 +34,8 @@ module.exports = (app) => {
           req.session.admin = true;
           res.redirect('/dashboard');
         } else {
-          res.render('auth/admin', {
-            errorMessage: 'Incorrect password or username',
-          });
+          req.flash('error', 'Invalid credentials');
+          res.redirect('/admin');
         }
       })
       .catch((error) => {

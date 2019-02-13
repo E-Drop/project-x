@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
-
+require('dotenv').config()
 // file where you put the sensible information of your app
 const keys = require('./bin/config/keys');
 
@@ -23,10 +23,9 @@ const keys = require('./bin/config/keys');
 const requireLogin = require('./middlewares/protected');
 const notifications = require('./middlewares/notifications');
 
-mongoose.connect(keys.db, { useNewUrlParser: true })
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
   .then(() => console.log('connected'))
   .catch(error => console.log('error', error));
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,6 +62,7 @@ app.use(notifications);
 app.use((req, res, next) => {
   // for the whole app //
   app.locals.currentUser = req.session.currentUser;
+  app.locals.admin = req.session.admin;
   // for the next middleware //
   res.locals.currentUser = req.session.currentUser;
   next();

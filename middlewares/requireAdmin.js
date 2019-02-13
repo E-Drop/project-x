@@ -2,7 +2,7 @@ const protectedRoute = (req, res, next) => {
   if (req.session.currentUser && req.session.admin) {
     next();
   } else {
-    req.flash.message('error', 'access forbidden')
+    req.flash('error', 'access forbidden')
     res.redirect('/dashboard');
   }
 };

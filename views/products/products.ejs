@@ -15,4 +15,8 @@
     <button id="buy">buy</button>
   </section>
 </div>
-<script src="/javascripts/main.js"></script>
+<% if(admin){
+  %><script src="/javascripts/productAdmin.js"></script>
+<% }else{
+  %><script src="/javascripts/productStore.js"></script>
+<% }%>

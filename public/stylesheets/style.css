@@ -44,7 +44,10 @@ p {
 
 .wrapper {
   width: 100%;
-  min-height: 80vh;
+  min-height: 70vh;
+  margin-bottom: 115px;
+  padding-top: 25px;
+  text-align: center;
 }
 
 a {
@@ -269,4 +272,14 @@ h3 {
   justify-content: center;
   align-items: center;
   margin-bottom: 115px;
+}
+
+#buy {
+  background: green;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 130px;
+  left: 38%;
 }

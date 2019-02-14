@@ -1,10 +1,5 @@
 <div class="products">
-  <h1>RUTAS</h1>
-  <a href="/products/new">Nuevo producto</a>
-  <a href="/products/id">detalles del producto (no va a funcionar porque necesita una id, pero te haces una idea</a>
-  <a href="/products/edit/id">tampoco va a funcionar, pero es la de editar producto</a>
-  <a href="/products/delete/id">Borrar producto, se está haciendo por axios pero te la puedo cambiar a un get para que sea un enlace normal y redireccione (o muestre un flash)</a>
-  <section class="wrapper">
+ <section class="wrapper">
     <form action='/search' method='POST'>
       <input type="text" id="search" placeholder="Search.." name="search"><button id="btn" type="submit"><i class="fa fa-search"></i></button>
     </form>
@@ -13,12 +8,7 @@
         <div class="box ">
           <a id="view-product" href="/products/<%= product.id %>"><p><%= product.name %></p></a> 
           <div class="second-row"> <p><%= product.price %>€</p></div>
-          <% if(admin){%> 
-            <div class="store third-row"><a href="/products/edit/<%= product.id %>"><button><i class="fas fa-pen"></i></button></a><button id="<%= product.id %>" class="delete"><i class="fas fa-times"></i></button></div>
-          
-          <%} else {%>
             <div class="admin third-row"><button id="<%= product.name %>" class="addToBuyList"><i class="fas fa-cart-plus"></i></button></div>
-          <% } %>
         </div>
       <% }) %>
     </section>

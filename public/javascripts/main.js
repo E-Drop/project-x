@@ -42,7 +42,7 @@ for(let button of toBuy){
     const id = button.id;
     if(products.some(product => product.name === id)){
       const index = products.findIndex(item => item.name === id);
-      products[index].quantity += 1; 
+      products[index].quantity += 1;
     } else {
       const obj = { name: id , quantity: 1};
       console.log(obj);

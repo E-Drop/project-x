@@ -19,6 +19,15 @@ nav {
   color: white;
   width:100%;
   padding: 20px 0;
+  display: flex;
+  justify-content: space-around
+}
+nav h3 {
+  margin: 0;
+}
+
+nav span {
+  color: #118cdc;
 }
 
 p {
@@ -92,7 +101,7 @@ h2 {
 }
 
 .form-container {
-  height: 92vh;
+  min-height: 92vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -183,23 +192,41 @@ h2 {
   justify-content: center;
 }
 
-.admin-menu {
+.menu {
+  position: fixed;
+  bottom: 0;
   display: flex;
   flex-wrap: wrap;
+  background: #1E1E1E;
   width: 100%;
   justify-content: space-evenly;
 }
-.admin-menu  div {
-  width: 25vw;
-    height: 25vw;
-    color: #118cdc;
-    margin: 12.5vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    background: #1E1E1E;
-    border-radius: 50px;
+
+.menu > a {
+  margin: 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu > a span {
+  margin-top: 10px;
+  font-size: .5rem;
+  text-align: center;
+}
+
+.menu  div {
+  width: 15vw;
+  height: 15vw;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  background: #118cdc;
+  border-radius: 100px;
 }
 
 .orders {
@@ -234,4 +261,12 @@ h3 {
 .status {
   color:#118cdc;
   font-weight: bold;
+}
+
+#no-log {
+  min-height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 115px;
 }

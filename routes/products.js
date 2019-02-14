@@ -6,7 +6,7 @@ module.exports = app => {
     console.log(req.session)
     try {
       const products = await Product.find({});
-      res.render('products/products', { products })
+      res.render('products/productsAdmin', { products })
 
     } catch(error) {
       next(error)

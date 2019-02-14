@@ -1,11 +1,16 @@
-<form action="/products/edit/<%= product.id %>" method="post">
-  <label for="name">Name</label>
-  <input type="text" name="name" value="<%= product.name %>"/>
-  <label for="description" >description</label>
-  <input type="text" name="description" value="<%= product.description %>"/>
-  <label for="price">price</label>
-  <input type="number" name="price" value="<%= product.price %>" />
-  <label for="stock">stock</label>
-  <input type="text" name="stock" value="<%= product.stock %>"/>
-  <button type="submit">Edit</button>
-</form>
+<div class="form-container" id="no-log">
+  <form id="form" action="/products/edit/<%= product.id %>" method="post">
+    <h2>Edit Product</h2>
+    <div>
+      <label for="name">Name</label>
+      <input type="text" name="name" value="<%= product.name %>"/>
+      <label for="description" >description</label>
+      <input type="text" name="description" value="<%= product.description %>"/>
+      <label for="price">price</label>
+      <input type="number" name="price" value="<%= product.price %>" />
+      <label for="stock">stock</label>
+      <input type="text" name="stock" value="<%= product.stock %>"/>
+    </div>
+    <button type="submit">Edit</button>
+  </form>
+</div>

@@ -10,9 +10,21 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-  <nav>titulico</nav>
+  <nav><h3>Gestion<span>app</span></h3>  <% if(currentUser) {%> <a href="/logout"><i class="fas fa-sign-out-alt"> logout</i></a> <% } %></nav>
   <%- include('../partials/notifications') %>
   
   <%- body %>
+  <% if(currentUser) {
+    console.log(currentUser);
+    if(admin){
+      %>
+      <%- include('../partials/adminMenu')%>
+      <%
+    }else {
+      %>
+      <%- include('../partials/storeMenu')%>
+      <%
+    }
+  } %>
 </body>
 </html>

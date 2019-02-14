@@ -8,7 +8,9 @@ const bcryptSalt = 10;
 module.exports = (app) => {
   /* GET home page. */
   app.get('/', (req, res, next) => {
-    res.render('index', { title: 'Express' });
+    if(req.session.currentUser && req.session.admin) res.redirect('/orders');
+    if(req.session.currentUser) res.redirect('/orders/new');
+    res.render('auth/login');
   });
 
   app.get('/admin', (req, res, next) => {
@@ -19,10 +21,8 @@ module.exports = (app) => {
     const { username, password } = req.body;
 
     if (username === '' || password === '') {
-      res.render('auth/admin', {
-        errorMessage: 'Indicate a username and a password to ',
-      });
-      return;
+      req.flash('error', 'please don\'t leave any empty fields')
+      res.redirect('/admin')
     }
     Admin.findOne({ username })
       .then((user) => {
@@ -34,11 +34,10 @@ module.exports = (app) => {
           // Save the login in the session!
           req.session.currentUser = user;
           req.session.admin = true;
-          res.redirect('/dashboard');
+          res.redirect('/orders');
         } else {
-          res.render('auth/admin', {
-            errorMessage: 'Incorrect password or username',
-          });
+          req.flash('error', 'Invalid credentials');
+          res.redirect('/admin');
         }
       })
       .catch((error) => {
@@ -47,6 +46,8 @@ module.exports = (app) => {
   });
 
   app.get('/signup', (req, res, next) => {
+    if(req.session.currentUser && req.session.admin) res.redirect('/orders');
+    if(req.session.currentUser) res.redirect('/orders/new');
     res.render('auth/signup');
   });
 
@@ -64,8 +65,10 @@ module.exports = (app) => {
           const salt = bcrypt.genSaltSync(bcryptSalt);
           const hashPass = bcrypt.hashSync(password, salt);
           const newStore = await Store.create({name, CIF, location});
-          await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
-          res.redirect('/dashboard');
+          const user = await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
+          req.session.currentUser = user;
+          req.session.admin = false;
+          res.redirect('/orders/new');
         } else {
           req.flash('error', 'That user or store already exists');
           res.redirect('/signup');
@@ -76,35 +79,29 @@ module.exports = (app) => {
     }
   });
 
-  app.get('/login', (req, res, next) => {
-    res.render('auth/login', { errorMessage: undefined });
-  });
 
   app.post('/login', (req, res, next) => {
     const { username, password } = req.body;
 
     if (username === '' || password === '') {
-      res.render('auth/login', {
-        errorMessage: 'Indicate a username and a password to sign up',
-      });
-      return;
+      req.flash('error', 'please don\'t leave any empty fields')
+      res.redirect('/')
     }
     StoreOwner.findOne({ username })
       .then((user) => {
         if (!user) {
-          res.render('auth/login', {
-            errorMessage: "The username doesn't exist",
-          });
+          req.flash('error', 'The username doesn\'t exist')
+          res.redirect('/');
           return;
         }
         if (bcrypt.compareSync(password, user.password)) {
           // Save the login in the session!
           req.session.currentUser = user;
-          res.redirect('/dashboard');
+          req.session.admin = false;
+          res.redirect('/orders/new');
         } else {
-          res.render('auth/login', {
-            errorMessage: 'Incorrect password or username',
-          });
+          req.flash('error', 'Invalid credentials')
+          res.redirect('/');
         }
       })
       .catch((error) => {

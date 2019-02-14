@@ -19,6 +19,15 @@ nav {
   color: white;
   width:100%;
   padding: 20px 0;
+  display: flex;
+  justify-content: space-around
+}
+nav h3 {
+  margin: 0;
+}
+
+nav span {
+  color: #118cdc;
 }
 
 p {
@@ -35,8 +44,12 @@ p {
 
 .wrapper {
   width: 100%;
-  min-height: 80vh;
+  min-height: 70vh;
+  margin-bottom: 115px;
+  padding-top: 25px;
+  text-align: center;
 }
+
 
 a {
   color: #00B7FF;
@@ -91,14 +104,41 @@ h2 {
   color: white;
 }
 
-#login {
+.form-container {
+  min-height: 92vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#form {
   height: 60vh;
   background-color: #1E1E1E;
-  padding: 50px;
+  border-radius: 10px;
+  padding: 0 50px 30px 50px;
+  color: white;
   display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#admin-form #form {
+  height: 40vh;
+}
+
+#form > div {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#form button {
+  background: #118cdc;
+  padding: 10px 30px;
+  border-radius: 20px;
+  color: white;
 }
 
 
@@ -156,23 +196,41 @@ h2 {
   justify-content: center;
 }
 
-.admin-menu {
+.menu {
+  position: fixed;
+  bottom: 0;
   display: flex;
   flex-wrap: wrap;
+  background: #1E1E1E;
   width: 100%;
   justify-content: space-evenly;
 }
-.admin-menu  div {
-  width: 25vw;
-    height: 25vw;
-    color: #118cdc;
-    margin: 12.5vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    background: #1E1E1E;
-    border-radius: 50px;
+
+.menu > a {
+  margin: 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu > a span {
+  margin-top: 10px;
+  font-size: .5rem;
+  text-align: center;
+}
+
+.menu  div {
+  width: 15vw;
+  height: 15vw;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  background: #118cdc;
+  border-radius: 100px;
 }
 
 .orders {
@@ -207,4 +265,22 @@ h3 {
 .status {
   color:#118cdc;
   font-weight: bold;
+}
+
+#no-log {
+  min-height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 115px;
+}
+
+#buy {
+  background: green;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 130px;
+  left: 38%;
 }

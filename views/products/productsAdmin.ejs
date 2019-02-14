@@ -1,0 +1,17 @@
+<div class="products">
+        <section class="wrapper">
+           <form action='/search' method='POST'>
+             <input type="text" id="search" placeholder="Search.." name="search"><button id="btn" type="submit"><i class="fa fa-search"></i></button>
+           </form>
+           <section id="ul">
+             <% products.forEach(product => {%>
+               <div class="box ">
+                 <a id="view-product" href="/products/<%= product.id %>"><p><%= product.name %></p></a> 
+                 <div class="second-row"> <p><%= product.price %>€</p></div>
+                   <div class="store third-row"><a href="/products/edit/<%= product.id %>"><button><i class="fas fa-pen"></i></button></a><button id="<%= product.id %>" class="delete"><i class="fas fa-times"></i></button></div>
+               </div>
+             <% }) %>
+           </section>
+         </section>
+       </div>
+       <script src="/javascripts/productAdmin.js"></script>

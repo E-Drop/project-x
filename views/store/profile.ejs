@@ -2,15 +2,15 @@
     <form id="form" action="/profile" method="post">
         <h2>Edit user</h2>
         <div>
-            <label for="name">Name</label>
+            <label for="username">Name</label>
             <input type="text" name="username" value="<%= user.username %>"/>
-            <label for="description" >Store Name</label>
+            <label for="name" >Store Name</label>
             <input type="text" name="name" value="<%= user._store.name %>"/>
             <label for="location">location</label>
-            <input type="number" name="location" value="<%= user._store.location %>" />
+            <input type="text" name="location" value="<%= user._store.location %>" />
         </div>
         <div>
-            <a href="/profile/newPassword">¿You want change password?</a>
+            <a href="/profile/newPassword">Change password</a>
         </div>
         <button type="submit">Update</button>
     </form>

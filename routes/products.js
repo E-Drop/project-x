@@ -3,7 +3,6 @@ const requireAdmin = require('../middlewares/requireAdmin')
 
 module.exports = app => {
   app.get('/products', requireAdmin, async (req, res, next) => {
-    console.log(req.session)
     try {
       const products = await Product.find({});
       res.render('products/productsAdmin', { products })

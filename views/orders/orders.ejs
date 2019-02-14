@@ -1,5 +1,15 @@
 <section class="orders wrapper">
-  <% orders.forEach(order => { %>
+  <% pending.forEach(order => { %>
+    <div class="order">
+      <div><h3><%= order._store.name.toUpperCase() %></h3><div class="status-box" ><p class="status">Status: <%= order.status %></p></div></div>
+      <p>Created: <%= new Date(order.createdAt).toLocaleString() %>  </p>
+      <div><p>Nombre</p><p>cantidad</p><p>precio unitario</p><p>Total</p></div>
+      <% order.products.forEach(product => { var tot = product.quantity*product.price;%>
+        <div><p><%= product.name %></p><p><%= product.quantity %></p><p><%= product.price %>€</p><p><%= tot %>€</p></div>
+      <% }) %>
+    </div>
+  <% }) %>
+  <% delivered.forEach(order => { %>
     <div class="order">
       <div><h3><%= order._store.name.toUpperCase() %></h3><p class="status">Status: <%= order.status %></p></div>
       <p>Created: <%= new Date(order.createdAt).toLocaleString() %>  </p>

@@ -6,7 +6,10 @@ const requireAdmin = require('../middlewares/requireAdmin');
 module.exports = app => {
   app.get('/orders', async (req, res, next) => {
     if (req.session.admin) {
-      const orders = await Order.find({}).populate('_store');
+      const pendingOrders = await Order.find({status: 'pending'}).sort({ created_at: 'asc' }).populate('_store');
+      const deliveredOrders = await Order.find({status: 'delivered'}).sort({ updated_at: 'desc' }).populate('_store')
+      const orders = [ ...pendingOrders, ...deliveredOrders]
+      console.log(orders)
       res.render('orders/orders', { orders });
     } else {
       const orders = await Order.find({

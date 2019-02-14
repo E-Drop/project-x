@@ -7,9 +7,17 @@ module.exports = app => {
     const user = await StoreOwner.findById(req.session.currentUser._id).populate(
       '_store'
     );
+    console.log(user);
     res.render('store/profile', { user });
   });
 
+
+  app.post('/profile', loggedNotAdmin, async(req,res,next) => {
+
+    await StoreOwner.findByIdAndUpdate(req.session.currentUser._id, )
+
+    req.flash('success', 'New info modified')
+  })
   app.get('/profile/newPassword', loggedNotAdmin, (req,res,next) => {
     res.render('store/newPassword')  
   })

@@ -8,9 +8,9 @@ module.exports = app => {
     if (req.session.admin) {
       const pendingOrders = await Order.find({status: 'pending'}).sort({ created_at: 'asc' }).populate('_store');
       const deliveredOrders = await Order.find({status: 'delivered'}).sort({ updated_at: 'desc' }).populate('_store')
-      const orders = [ ...pendingOrders, ...deliveredOrders]
+      
       console.log(orders)
-      res.render('orders/orders', { orders });
+      res.render('orders/orders', { pendingOrders, deliveredOrders });
     } else {
       const orders = await Order.find({
         _store: req.session.currentUser._store

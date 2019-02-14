@@ -8,6 +8,7 @@ const bcryptSalt = 10;
 module.exports = (app) => {
   /* GET home page. */
   app.get('/', (req, res, next) => {
+    if(req.session.currentUser) res.redirect('/dashboard')
     res.render('auth/login');
   });
 
@@ -44,6 +45,7 @@ module.exports = (app) => {
   });
 
   app.get('/signup', (req, res, next) => {
+    if(req.session.currentUser) res.redirect('/dashboard')
     res.render('auth/signup');
   });
 
@@ -80,10 +82,8 @@ module.exports = (app) => {
     const { username, password } = req.body;
 
     if (username === '' || password === '') {
-      res.render('auth/login', {
-        errorMessage: 'Indicate a username and a password to sign up',
-      });
-      return;
+      req.flash('error', 'please don\'t leave any empty fields')
+      res.redirect('/')
     }
     StoreOwner.findOne({ username })
       .then((user) => {

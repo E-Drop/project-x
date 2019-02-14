@@ -3,7 +3,6 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const login = require('./routes/auth');
-const dashboard = require('./routes/dashboard');
 const products = require('./routes/products');
 const orders = require('./routes/orders')
 
@@ -71,7 +70,6 @@ app.use((req, res, next) => {
 
 login(app);
 app.use(requireLogin);
-dashboard(app);
 products(app);
 orders(app);
 

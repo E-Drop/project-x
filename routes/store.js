@@ -1,23 +1,36 @@
+const bcrypt = require('bcrypt');
 const loggedNotAdmin = require('../middlewares/loggedNotAdmin');
 const StoreOwner = require('../models/storeOwner');
+const Store = require('../models/Store');
 const bcryptSalt = 10;
 
 module.exports = app => {
   app.get('/profile', loggedNotAdmin, async (req, res, next) => {
-    const user = await StoreOwner.findById(req.session.currentUser._id).populate(
-      '_store'
-    );
-    console.log(user);
-    res.render('store/profile', { user });
+    try {
+      const user = await StoreOwner.findById(req.session.currentUser._id).populate(
+        '_store'
+      );
+      console.log(user);
+      res.render('store/profile', { user });
+    } catch(error) {
+      next(error)
+    }
   });
 
 
   app.post('/profile', loggedNotAdmin, async(req,res,next) => {
+    const { username, name, location } = req.body;
+    try {
+      const result = await StoreOwner.findByIdAndUpdate(req.session.currentUser._id, { username });
+      await Store.findByIdAndUpdate(result._store, { name, location })
+      req.flash('success', 'New info modified');
+      res.redirect('/profile');
+    } catch(error) {
+      next(error)
+    }
+  });
 
-    await StoreOwner.findByIdAndUpdate(req.session.currentUser._id, )
 
-    req.flash('success', 'New info modified')
-  })
   app.get('/profile/newPassword', loggedNotAdmin, (req,res,next) => {
     res.render('store/newPassword')  
   })
@@ -34,11 +47,14 @@ module.exports = app => {
         res.redirect('/profile/newPassword');
       } else {
         const salt = bcrypt.genSaltSync(bcryptSalt);
-        const hashPass = bcrypt.hashSync(password, salt);
-
-        await StoreOwner.findByIdAndUpdate(req.session.currentUser._id, { password: hashPass })
-        req.flash('success', 'password changed');
-        res.redirect('/profile');
+        const hashPass = bcrypt.hashSync(newP, salt);
+        try {
+          await StoreOwner.findByIdAndUpdate(req.session.currentUser._id, { password: hashPass })
+          req.flash('success', 'password changed');
+          res.redirect('/profile');
+        } catch(error) {
+          next(error)
+        }
       }
     }
 

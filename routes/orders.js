@@ -44,7 +44,7 @@ module.exports = app => {
     } catch(error) {
       next(error)
     }
-  res.send("Order created successfully");
+  res.send({message: "Order created successfully" });
   });
 
   app.get('/orders/new', loggedNotAdmin, async(req, res, next) => {
@@ -58,9 +58,8 @@ module.exports = app => {
 
   app.get('/orders/stats', requireAdmin, async(req,res,next) => {
     try{
-      const orders = await Order.aggregate().unwind('products').group({ _id: '$_store', 'total': { $sum: { $multiply: ["$products.price", "$products.quantity"] }}})
+      const orders = await Order.populate('_store').aggregate().unwind('products').group({ _id: '$_store.name', 'total': { $sum: { $multiply: ["$products.price", "$products.quantity"] }}})
       console.log(orders)
-      res.render('orders/orders', {orders})
     } catch(error) {
       next(error)
     }

@@ -59,6 +59,7 @@ module.exports = app => {
     try {
       const newProduct = req.body;
       await Product.create(newProduct);
+      req.flash('success', 'product created');
       res.redirect('/products');
     } catch (error) {
       next(error);
@@ -69,6 +70,7 @@ module.exports = app => {
     try {
       const updatedProduct = req.body;
       await Product.findByIdAndUpdate(req.params.id, updatedProduct);
+      req.flash('success', 'Product successfully updated');
       res.redirect('/products');
     } catch (error) {
       next(error);

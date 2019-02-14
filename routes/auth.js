@@ -8,7 +8,8 @@ const bcryptSalt = 10;
 module.exports = (app) => {
   /* GET home page. */
   app.get('/', (req, res, next) => {
-    if(req.session.currentUser) res.redirect('/dashboard')
+    if(req.session.currentUser && req.session.admin) res.redirect('/orders');
+    if(req.session.currentUser) res.redirect('/orders/new');
     res.render('auth/login');
   });
 
@@ -33,7 +34,7 @@ module.exports = (app) => {
           // Save the login in the session!
           req.session.currentUser = user;
           req.session.admin = true;
-          res.redirect('/dashboard');
+          res.redirect('/orders');
         } else {
           req.flash('error', 'Invalid credentials');
           res.redirect('/admin');
@@ -45,7 +46,8 @@ module.exports = (app) => {
   });
 
   app.get('/signup', (req, res, next) => {
-    if(req.session.currentUser) res.redirect('/dashboard')
+    if(req.session.currentUser && req.session.admin) res.redirect('/orders');
+    if(req.session.currentUser) res.redirect('/orders/new');
     res.render('auth/signup');
   });
 
@@ -66,7 +68,7 @@ module.exports = (app) => {
           const user = await StoreOwner.create({ username, password: hashPass, _store: newStore.id });
           req.session.currentUser = user;
           req.session.admin = false;
-          res.redirect('/dashboard');
+          res.redirect('/orders/new');
         } else {
           req.flash('error', 'That user or store already exists');
           res.redirect('/signup');
@@ -96,7 +98,7 @@ module.exports = (app) => {
           // Save the login in the session!
           req.session.currentUser = user;
           req.session.admin = false;
-          res.redirect('/dashboard');
+          res.redirect('/orders/new');
         } else {
           req.flash('error', 'Invalid credentials')
           res.redirect('/');

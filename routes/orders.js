@@ -6,18 +6,19 @@ const requireAdmin = require('../middlewares/requireAdmin');
 module.exports = app => {
   app.get('/orders', async (req, res, next) => {
     if (req.session.admin) {
-      const pendingOrders = await Order.find({status: 'pending'}).sort({ created_at: 'asc' }).populate('_store');
-      const deliveredOrders = await Order.find({status: 'delivered'}).sort({ updated_at: 'desc' }).populate('_store')
+      const pending = await Order.find({status: 'pending'}).sort({ created_at: 'asc' }).populate('_store');
+      const delivered = await Order.find({status: 'delivered'}).sort({ updated_at: 'desc' }).populate('_store')
       
-      console.log(orders)
-      res.render('orders/orders', { pendingOrders, deliveredOrders });
+      res.render('orders/orders', { pending, delivered });
     } else {
-      const orders = await Order.find({
-        _store: req.session.currentUser._store
-      }).populate('_store');
+      const pending = await Order.find({
+        _store: req.session.currentUser._store,
+      status: 'pending'}).sort({ created_at: 'asc' }).populate('_store');
+      const delivered = await Order.find({
+        _store: req.session.currentUser._store,
+      status: 'delivered'}).sort({ created_at: 'desc' }).populate('_store');
 
-      console.log(orders);
-      res.render('orders/orders', { orders });
+      res.render('orders/orders', { pending, delivered });
     }
   });
 

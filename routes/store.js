@@ -32,7 +32,7 @@ module.exports = app => {
 
 
   app.get('/profile/newPassword', loggedNotAdmin, (req,res,next) => {
-    res.render('store/newPassword')  
+    res.render('store/newPassword');
   })
 
   app.post('/profile/newPassword', loggedNotAdmin, async(req,res,next) => {
@@ -57,6 +57,5 @@ module.exports = app => {
         }
       }
     }
-
   })
 };

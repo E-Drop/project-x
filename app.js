@@ -5,6 +5,7 @@ const app = express();
 const login = require('./routes/auth');
 const products = require('./routes/products');
 const orders = require('./routes/orders');
+const store = require('./routes/store');
 
 // cookie-parser save cookies in the browser
 const cookieParser = require('cookie-parser');
@@ -72,6 +73,7 @@ login(app);
 app.use(requireLogin);
 products(app);
 orders(app);
+store(app);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

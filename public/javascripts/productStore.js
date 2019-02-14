@@ -37,7 +37,6 @@ function handleButton(e) {
           products[index].quantity += 1;
         } else {
           const obj = { name: id , quantity: 1};
-          console.log(obj);
           products.push(obj);
         }
         return products;

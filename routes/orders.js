@@ -8,8 +8,8 @@ module.exports = app => {
     if (req.session.admin) {
       const pending = await Order.find({status: 'pending'}).sort({ created_at: 'asc' }).populate('_store');
       const delivered = await Order.find({status: 'delivered'}).sort({ updated_at: 'desc' }).populate('_store')
-      
-      res.render('orders/orders', { pending, delivered });
+
+      res.render('orders/ordersAdmin', { pending, delivered });
     } else {
       const pending = await Order.find({
         _store: req.session.currentUser._store,
@@ -75,7 +75,6 @@ module.exports = app => {
             $sum: { $multiply: ['$products.price', '$products.quantity'] }
           }
         });
-      console.log(orders);
     } catch (error) {
       next(error);
     }

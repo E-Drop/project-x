@@ -10,7 +10,6 @@ module.exports = app => {
       const user = await StoreOwner.findById(req.session.currentUser._id).populate(
         '_store'
       );
-      console.log(user);
       res.render('store/profile', { user });
     } catch(error) {
       next(error)

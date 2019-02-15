@@ -166,6 +166,10 @@ h2 {
   color: green;
 }
 
+.fa-cart-arrow-down {
+  color: red;
+}
+
 .stock {
   background-color: white;
   height: 20px;

@@ -70,6 +70,7 @@ a {
 #ul > .box {
   width: 45vw;
   height: 35vw;
+  margin-bottom: 35px;
   background-color: #1E1E1E;
 
   border-radius: 20px;
@@ -81,6 +82,7 @@ a {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  margin-bottom: 60px;
 }
 
 #ul div a {
@@ -157,7 +159,7 @@ h2 {
 .wrapper > form > input {
   width: 40vw;
   height:41px;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px;
 }
 
 .fa-cart-plus {
@@ -280,7 +282,7 @@ h3 {
 }
 
 .buy-container {
-  position: absolute;
+  position: fixed;
   bottom: 130px;
   width: 100%;
   text-align: center;

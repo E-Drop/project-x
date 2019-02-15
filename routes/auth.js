@@ -8,9 +8,14 @@ const bcryptSalt = 10;
 module.exports = (app) => {
   /* GET home page. */
   app.get('/', (req, res, next) => {
-    if(req.session.currentUser && req.session.admin) res.redirect('/orders');
-    if(req.session.currentUser) res.redirect('/orders/new');
-    res.render('auth/login');
+    if(req.session.currentUser && req.session.admin) {
+      res.redirect('/orders')
+    }
+    else if(req.session.currentUser) {
+      res.redirect('/orders/new')
+    }else {
+      res.render('auth/login');
+    }
   });
 
   app.get('/admin', (req, res, next) => {

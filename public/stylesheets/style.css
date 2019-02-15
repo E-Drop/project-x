@@ -160,14 +160,17 @@ h2 {
   border-radius: 5px 0 0 5px;
 }
 
-.addToBuyList {
-  position: absolute;
-
-
-}
-
 .fa-cart-plus {
   color: green;
+}
+
+.stock {
+  background-color: white;
+  height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .fa-pen{

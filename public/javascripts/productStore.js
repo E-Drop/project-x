@@ -8,8 +8,12 @@ function handleButton(e) {
           data = data.map((product)=>
           a += `<div class="box">
   <a id="view-product" href="/products/${product._id}"><p>${product.name}</p></a>
-  <div class="second-row"><p>${product.price}</p></div> 
-  <div class="admin third-row"><p><button id="${product.name}" class="addToBuyList"><i class="fas fa-cart-plus"></i></button></p></div>
+  <div class="second-row"><p>${product.price}€</p></div> 
+  <div class="store third-row">
+  <button id="${product.name}" class="leaveToBuyList"><i class="fas fa-cart-arrow-down"></i></button>
+  <div class="stock">0</div>
+  <button id="${product.name}" class="addToBuyList"><i class="fas fa-cart-plus"></i></button>
+  </div>
   </div>`);
           document.getElementById('ul').innerHTML = a;
           add();
@@ -26,8 +30,12 @@ function handleButton(e) {
           data = data.map((product)=>
           a += `<div class="box">
   <a id="view-product" href="/products/${product._id}"><p>${product.name}</p></a>
-  <div class="second-row"><p>${product.price}</p></div> 
-  <div class="admin third-row"><p><button id="${product.name}" class="addToBuyList"><i class="fas fa-cart-plus"></i></button></p></div>
+  <div class="second-row"><p>${product.price}€</p></div> 
+  <div class="store third-row">
+  <button id="${product.name}" class="leaveToBuyList"><i class="fas fa-cart-arrow-down"></i></button>
+  <div class="stock">0</div>
+  <button id="${product.name}" class="addToBuyList"><i class="fas fa-cart-plus"></i></button>
+  </div>
   </div>`);
           document.getElementById('ul').innerHTML = a;
           add();
@@ -44,6 +52,7 @@ function handleButton(e) {
   
   
   const toBuy = document.getElementsByClassName('addToBuyList');
+  const toLeave = document.getElementsByClassName('leaveToBuyList');
   var products = [];
   add();
   function add(){
@@ -53,9 +62,32 @@ function handleButton(e) {
         if(products.some(product => product.name === id)){
           const index = products.findIndex(item => item.name === id);
           products[index].quantity += 1;
+          button.parentNode.childNodes[3].innerHTML = products[index].quantity;
         } else {
           const obj = { name: id , quantity: 1};
           products.push(obj);
+          button.parentNode.childNodes[3].innerHTML = 1;
+        }
+        return products;
+      })
+    }
+    for(let button of toLeave){
+      button.addEventListener('click', () => {
+        const id = button.id;
+        if(products.some(product => product.name === id)){
+          const index = products.findIndex(item => item.name === id);
+          if(products[index].quantity === 0){
+            const alertE = '<div class="alert alert-danger">Add at least one first</div>';
+          const not = document.getElementById('notification');
+          not.innerHTML = alertE;
+          }else{
+          products[index].quantity -= 1;
+          button.parentNode.childNodes[3].innerHTML = products[index].quantity;
+        }
+        } else {
+          const alertE = '<div class="alert alert-danger">Add at least one first</div>';
+          const not = document.getElementById('notification');
+          not.innerHTML = alertE;
         }
         return products;
       })

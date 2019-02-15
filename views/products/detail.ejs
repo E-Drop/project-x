@@ -1,5 +1,11 @@
-<h1><%= product.name %></h1>
-
-<p>Description: <%= product.desciption %></p>
-<p>Price: <%= product.price %></p>
-<p>Stock <%= product.stock %></p>
+<div class="form-container" id="no-log">
+        <form id="form" action="/products/<%= product.id %>" method="post">
+          <h2><%= product.name %></h2>
+          <div>
+            <p>Description: <%= product.desciption %></p>
+            <p>Price: <%= product.price %></p>
+            <p>Stock <%= product.stock %></p>
+        </div>
+        <div></div>
+    </form>
+</div>

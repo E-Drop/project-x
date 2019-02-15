@@ -8,7 +8,11 @@
         <div class="box ">
           <a id="view-product" href="/products/<%= product.id %>"><p><%= product.name %></p></a> 
           <div class="second-row"> <p><%= product.price %>€</p></div>
-            <div class="admin third-row"><button id="<%= product.name %>" class="addToBuyList"><i class="fas fa-cart-plus"></i></button></div>
+            <div class="store third-row"> 
+              <button id="<%= product.name %>" class="leaveToBuyList"><i class="fas fa-cart-arrow-down"></i></button>
+              <div class="stock">0</div>
+              <button id="<%= product.name %>" class="addToBuyList"><i class="fas fa-cart-plus"></i></button>
+            </div>
         </div>
       <% }) %>
     </section>

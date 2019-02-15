@@ -394,3 +394,17 @@ input:checked + .slider:before {
 .third-row i {
   font-size: 1.5rem;
 }
+
+#pendings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#delivered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

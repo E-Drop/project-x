@@ -24,7 +24,6 @@ module.exports = app => {
 
   app.post('/orders', loggedNotAdmin, async (req, res, next) => {
     const { products } = req.body;
-    console.log();
     let i = 0;
     for (let product of products) {
       try {

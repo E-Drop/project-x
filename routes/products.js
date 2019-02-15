@@ -35,6 +35,15 @@ module.exports = app => {
       next(error);
     }
   });
+  app.get('/api/allProducts', async (req, res, next) => {
+    try {
+      const result = await Product.find({});
+      console.log(result);
+      res.send(result);
+    } catch (error) {
+      next(error);
+    }
+  });
 
   app.post('/products/delete/:id', requireAdmin, async (req, res, next) => {
     try {
@@ -58,7 +67,7 @@ module.exports = app => {
     try {
       const newProduct = req.body;
       await Product.create(newProduct);
-      req.flash('success', 'product created');
+      req.flash('success', 'Product created successfully');
       res.redirect('/products');
     } catch (error) {
       next(error);

@@ -11,7 +11,9 @@
 </head>
 <body>
   <nav><h3>Gestion<span>app</span></h3>  <% if(currentUser) {%> <a href="/logout"><i class="fas fa-sign-out-alt"> logout</i></a> <% } %></nav>
+  <div id="notification">
   <%- include('../partials/notifications') %>
+</div>
   
   <%- body %>
   <% if(currentUser) {
